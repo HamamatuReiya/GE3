@@ -17,7 +17,17 @@ public://メンバ関数
 	//更新
 	void Update();
 
+	//任意のボタンを押されている
+	bool PushKey(BYTE keyNumber);
+	//任意のボタンが押された瞬間
+	bool TriggerKey(BYTE keyNumber);
+	//任意のボタンが離された瞬間
+
 private:
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard;
+	Microsoft::WRL::ComPtr<IDirectInput8> directInput;
+
+	BYTE key[256] = {};
+	BYTE keyPre[256] = {};
 };
 

@@ -8,7 +8,7 @@ public:
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
 	void Initialize();
-	void Update();
+	bool Update();
 
 	void Finalize();
 
@@ -23,5 +23,6 @@ public:
 private:
 	HWND hwnd;
 	WNDCLASSEX w{};
+	MSG msg{};  // メッセージ
 };
 

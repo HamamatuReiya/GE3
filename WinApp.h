@@ -3,6 +3,7 @@
 // WindowsAPI
 class WinApp
 {
+public:
 	//‰Šú‰»
 	void Initialize();
 	//XV

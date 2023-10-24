@@ -9,11 +9,13 @@
 
 #include <wrl.h>
 
+#include "WinApp.h"
+
 class Input
 {
 public://メンバ関数
 	//初期化
-	void Initialize(HINSTANCE hInstance,HWND hwnd);
+	void Initialize(WinApp* winApp);
 	//更新
 	void Update();
 
@@ -24,6 +26,8 @@ public://メンバ関数
 	//任意のボタンが離された瞬間
 
 private:
+	WinApp* winApp_ = nullptr;
+
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard;
 	Microsoft::WRL::ComPtr<IDirectInput8> directInput;
 

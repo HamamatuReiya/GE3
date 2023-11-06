@@ -9,6 +9,9 @@
 
 class DirectXCommon
 {
+private:
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+
 public:
 	void Initialize(WinApp* winApp);
 
@@ -16,6 +19,10 @@ public:
 	void PreDraw();
 	//描画後処理
 	void PostDraw();
+
+	//Getter
+	ID3D12Device* GetDevice() const { return device.Get(); }
+	ID3D12GraphicsCommandList* GetCommandList()const { return commandList.Get(); }
 
 private:
 	//デバイス
@@ -34,25 +41,25 @@ private:
 private:
 	WinApp* winApp = nullptr;
 
-	Microsoft::WRL::ComPtr<ID3D12Device> device;
-	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory;
+	ComPtr<ID3D12Device> device;
+	ComPtr<IDXGIFactory7> dxgiFactory;
 
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator;
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList;
-	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue;
+	ComPtr<ID3D12CommandAllocator> commandAllocator;
+	ComPtr<ID3D12GraphicsCommandList> commandList;
+	ComPtr<ID3D12CommandQueue> commandQueue;
 
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain;
+	ComPtr<IDXGISwapChain4> swapChain;
 
 	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
+	ComPtr<ID3D12DescriptorHeap> rtvHeap;
 	std::vector<ComPtr<ID3D12Resource>> backBuffers;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
+	ComPtr<ID3D12Resource> depthBuff;
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
+	ComPtr<ID3D12DescriptorHeap> dsvHeap;
 
-	Microsoft::WRL::ComPtr<ID3D12Fence> fence;
+	ComPtr<ID3D12Fence> fence;
 	UINT64 fenceVal = 0;
 
 	D3D12_RESOURCE_BARRIER barrierDesc{};

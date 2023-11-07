@@ -1,5 +1,7 @@
 ﻿#include "WinApp.h"
 
+#pragma comment(lib,"winmm.lib")
+
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
     // メッセージ応じてゲーム固有の処理を行う
@@ -46,6 +48,9 @@ void WinApp::Initialize()
 
     // ウィンドウを表示状態にする
     ShowWindow(hwnd, SW_SHOW);
+
+    //システムタイマーの分解機能を上げる
+    timeBeginPeriod(1);
 }
 
 bool WinApp::Update()

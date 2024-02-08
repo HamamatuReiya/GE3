@@ -12,8 +12,6 @@ void Sprite::Initialize(DirectXCommon* dxCommon, SpriteCommon* common)
 	dxCommon_ = dxCommon;
 	common_ = common;
 
-
-
 	//’¸“_î•ñ
 	CreateVertex();
 	// F

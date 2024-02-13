@@ -29,11 +29,15 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon)
 	descriptorRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	// RootParamterçÏê¨
-	D3D12_ROOT_PARAMETER rootParamters[1]{};
+	D3D12_ROOT_PARAMETER rootParamters[2]{};
 	// êF
 	rootParamters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParamters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParamters[0].Descriptor.ShaderRegister = 0;
+	// çsóÒ
+	rootParamters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParamters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParamters[1].Descriptor.ShaderRegister = 0;
 
 	descriptorRootSignature.pParameters = rootParamters;
 	descriptorRootSignature.NumParameters = _countof(rootParamters);

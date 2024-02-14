@@ -9,10 +9,10 @@
 using namespace Microsoft::WRL;
 using namespace DirectX;
 
-void Sprite::Initialize(DirectXCommon* dxCommon, SpriteCommon* common)
+void Sprite::Initialize(SpriteCommon* common)
 {
-	dxCommon_ = dxCommon;
 	common_ = common;
+	dxCommon_ = common_->GetDirectXCommon();
 
 	// 画像の読み込み
 	DirectX::ScratchImage mipImages = common_->LoadTexture(L"Resources/Mario.jpg");
@@ -89,14 +89,9 @@ void Sprite::Draw()
 
 	// 行列の代入
 	*wvpData = worldViewProjecionMatrix;
-
-	dxCommon_->GetCommandList()->SetGraphicsRootSignature(common_->GetRootSignature());
-	dxCommon_->GetCommandList()->SetPipelineState(common_->GetPipelineState());
 	
 	// 頂点情報
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
-
-	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// 色情報
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialRsource->GetGPUVirtualAddress());
@@ -106,16 +101,16 @@ void Sprite::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU);
 
 
-	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
+	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 }
 
 void Sprite::CreateVertex()
 {
 	// VertexResource
-	vertexResource = CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * 3);
+	vertexResource = CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * 6);
 
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeof(VertexData) * 3;
+	vertexBufferView.SizeInBytes = sizeof(VertexData) * 6;
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
 
 	// 頂点
@@ -125,11 +120,21 @@ void Sprite::CreateVertex()
 	vertexData[0].position = { -0.5f,-0.5f,0.0f,1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 
-	vertexData[1].position = { +0.0f,+0.5f,0.0f,1.0f };
-	vertexData[1].texcoord = { 0.5f,0.0f };
+	vertexData[1].position = { -0.5f,0.5f,0.0f,1.0f };
+	vertexData[1].texcoord = { 0.0f,0.0f };
 
-	vertexData[2].position = { +0.5f,-0.5f,0.0f,1.0f };
+	vertexData[2].position = { 0.5f,-0.5f,0.0f,1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
+
+
+	vertexData[3].position = { -0.5f,0.5f,0.0f,1.0f };
+	vertexData[3].texcoord = { 0.0f,0.0f };
+
+	vertexData[4].position = { 0.5f,0.5f,0.0f,1.0f };
+	vertexData[4].texcoord = { 1.0f,0.0f };
+
+	vertexData[5].position = { 0.5f,-0.5f,0.0f,1.0f };
+	vertexData[5].texcoord = { 1.0f,1.0f };
 
 }
 

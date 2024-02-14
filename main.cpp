@@ -35,7 +35,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     common->Initialize(dxCommon_);
     //スプライト
     Sprite* sp = new Sprite();
-    sp->Initialize(dxCommon_,common);
+    sp->Initialize(common);
    
     // ゲームループ
     while (true) {
@@ -53,6 +53,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         //更新前処理
         ImGuiManager::CreateCommand();
         dxCommon_->PreDraw();
+        common->SpritePreDraw();
 
         sp->Draw();
 

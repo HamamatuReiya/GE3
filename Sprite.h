@@ -26,7 +26,7 @@ private:
 	};
 
 public:
-	void Initialize(DirectXCommon* dxCommon,SpriteCommon* common);
+	void Initialize(SpriteCommon* common);
 	void Update();
 	void Draw();
 
@@ -57,7 +57,7 @@ private:
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
 
 	// パラメーター
-	DirectX::XMFLOAT4 color_{ 1.0f,0.0f,0.0f,1.0f };
+	DirectX::XMFLOAT4 color_{ 1.0f,1.0f,1.0f,1.0f };
 	//                       Scale   Rotate Translate
 	Transform transform = { {1,1,1},{0,0,0},{0,0,0} };
 

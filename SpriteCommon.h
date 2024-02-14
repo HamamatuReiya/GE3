@@ -16,10 +16,12 @@ private:
 
 public:
 	void Initialize(DirectXCommon* dxCommon);
+	void SpritePreDraw();
 
 	// Getter
 	ID3D12RootSignature* GetRootSignature() { return rootSigneture.Get(); }
 	ID3D12PipelineState* GetPipelineState() { return pipelineState.Get(); }
+	DirectXCommon* GetDirectXCommon()       { return dxCommon_; }
 
 	// ‰æ‘œ“Ç‚İ‚İ
 	DirectX::ScratchImage LoadTexture(const std::wstring& filePath);

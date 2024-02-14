@@ -49,6 +49,23 @@ void Sprite::Initialize(SpriteCommon* common)
 
 void Sprite::Update()
 {
+	transform.translate = { position.x,position.y,0 };
+	transform.rotate = { 0,0,rotation };
+	materialData->color = color_;
+	transform.scale = { size.x,size.y,1.0f };
+
+	vertexData[0].position = { 0.0f,1.0f,0.0f,1.0f };
+	vertexData[0].texcoord = { 0.0f,1.0f };
+
+	vertexData[1].position = { 0.0f,0.0f,0.0f,1.0f };
+	vertexData[1].texcoord = { 0.0f,0.0f };
+
+	vertexData[2].position = { 1.0f,1.0f,0.0f,1.0f };
+	vertexData[2].texcoord = { 1.0f,1.0f };
+
+	vertexData[3].position = { 1.0f,0.0f,0.0f,1.0f };
+	vertexData[3].texcoord = { 1.0f,0.0f };
+
 	ImGui::Begin("Texture");
 	ImGui::DragFloat3("Pos", &transform.translate.x, 0.1f);
 
@@ -84,12 +101,7 @@ void Sprite::Draw()
 	// View
 	XMMATRIX view = XMMatrixInverse(nullptr, cameraMatrix);
 	// Proj
-	XMMATRIX proj = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(45.f),
-		(float)WinApp::window_width / (float)WinApp::window_height,
-		0.1f,
-		100.0f
-	);
+	XMMATRIX proj = XMMatrixOrthographicOffCenterLH(0, WinApp::window_width, WinApp::window_height, 0, 0.1f, 100.f);
 
 	// WVP
 	XMMATRIX worldViewProjecionMatrix = worldMatrix * (view * proj);
@@ -136,19 +148,18 @@ void Sprite::CreateVertex()
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
 
 	// ’¸“_
-	VertexData* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 
-	vertexData[0].position = { -0.5f,-0.5f,0.0f,1.0f };
+	vertexData[0].position = { 0.0f,1.0f,0.0f,1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 
-	vertexData[1].position = { -0.5f,0.5f,0.0f,1.0f };
+	vertexData[1].position = { 0.0f,0.0f,0.0f,1.0f };
 	vertexData[1].texcoord = { 0.0f,0.0f };
 
-	vertexData[2].position = { 0.5f,-0.5f,0.0f,1.0f };
+	vertexData[2].position = { 1.0f,1.0f,0.0f,1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 
-	vertexData[3].position = { 0.5f,0.5f,0.0f,1.0f };
+	vertexData[3].position = { 1.0f,0.0f,0.0f,1.0f };
 	vertexData[3].texcoord = { 1.0f,0.0f };
 
 }

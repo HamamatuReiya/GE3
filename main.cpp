@@ -48,6 +48,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
         //入力
         input_->Update();
+        sp->Update();
 
         //更新前処理
         ImGuiManager::CreateCommand();

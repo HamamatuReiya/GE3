@@ -20,9 +20,16 @@ private:
 		DirectX::XMFLOAT3 translate;
 	};
 
+	// 頂点情報
 	struct VertexData{
 		DirectX::XMFLOAT4 position;
 		DirectX::XMFLOAT2 texcoord;
+	};
+
+	// マテリアル
+	struct MaterialData {
+		DirectX::XMFLOAT4 color;
+		DirectX::XMMATRIX uvTransform;
 	};
 
 public:
@@ -33,6 +40,8 @@ public:
 private:
 	// 頂点情報作成
 	void CreateVertex();
+	// インデックス情報作成
+	void CreateIndex();
 	// マテリアル情報作成
 	void CreateMaterial();
 	// 行列情報作成
@@ -46,8 +55,13 @@ private:
 	ComPtr<ID3D12Resource> vertexResource;
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
 
+	// インデックス
+	ComPtr<ID3D12Resource> indexResource;
+	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
+
 	// マテリアル情報
-	ComPtr<ID3D12Resource> materialRsource;
+	ComPtr<ID3D12Resource> materialResource;
+	MaterialData* materialData = nullptr;
 
 	// 行列情報
 	ComPtr<ID3D12Resource> wvpResource;
@@ -58,7 +72,10 @@ private:
 
 	// パラメーター
 	DirectX::XMFLOAT4 color_{ 1.0f,1.0f,1.0f,1.0f };
-	//                       Scale   Rotate Translate
+	// UV座標
+	Transform uvTransform = { {1,1,1},{0,0,0},{0,0,0} };
+
+	//自機                   Scale   Rotate Translate
 	Transform transform = { {1,1,1},{0,0,0},{0,0,0} };
 
 	// カメラ
